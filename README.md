@@ -1,4 +1,4 @@
-# ‎<p align="left"><img src="./Resources/repoHeader.png" width="1000"></p>
+# <p align="left"><img src="./Resources/repoHeader.png" width="1000"></p>
 
 
 
@@ -11,12 +11,14 @@ This repo focuses on simplifying the build process of YouTube Plus, and adding m
 When building the app, the latest stable YouTube Plus .deb is downloaded from the original repo, then other tweaks are built from source. All tweaks are then injected into your IPA.
 
 YTweaks added settings:
-- **Fullscreen to the right or left:** Locks fullscreen orientation.
-- **Night Mode**: Lowers brightness below device minimum by "faking it" with an app-wide semi-transparent black overlay. Works best on OLED devices.
-- **Disable floating miniplayer:** Restores the old miniplayer by disabling the floating miniplayer.
-- **Virtual fullscreen bezels:** Adds invisible touch-safe zones on black bars to prevent accidental taps and skips.
-- **Fix Casting** - Attempts to fix casting by changing some A/B flags. Only works on v20.10.4 or lower
-- **Hide AI Summaries:** Hides AI summaries that appear in the home feed.
+- **Force Fullscreen Direction (Button)**: Choose Off, Left, Right, or Portrait for the fullscreen button.
+- **Force Fullscreen Direction (Gesture)**: Choose Off, Left, Right, or Portrait for the swipe-up gesture. Independent of the button setting.
+- **Disable floating miniplayer**: Restores the old miniplayer by disabling the floating miniplayer.
+- **Virtual fullscreen bezels**: Adds invisible touch-safe zones on black bars to prevent accidental taps and skips.
+- **Fix Casting** - Attempts to fix casting by changing some A/B flags. Only works on v20.10.4 or lower.
+- **Hide AI Summaries**: Attempts to block/hide AI summaries below videos in the home feed.
+- **Fake Brightness**: Lowers apparent brightness below the system minimum. Works best on OLED devices.
+- **Schedule Fake Brightness (Night Mode)**: Automatically applies fake brightness during a set time range.
 
 
 Added tweaks:
