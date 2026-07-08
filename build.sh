@@ -29,6 +29,7 @@ TWEAKS=(
     "YouLoop|youloop.deb|https://github.com/bhackel/YouLoop.git||"
     "YouSpeed|youspeed.deb|https://github.com/PoomSmart/YouSpeed.git||"
     "YouGetCaption|yougetcaption.deb|https://github.com/PoomSmart/YouGetCaption.git||"
+    "YouFixPlaybackIssues|youfixplaybackissues.deb|https://github.com/AppropriateNet2928/YTLitePlusRenewed.git|||adec498be498fb535f5712a1df84ec349f6db93a|YouFixPlaybackIssues"
 )
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; NC='\033[0m'
@@ -70,7 +71,7 @@ EOF
 parseArgs() {
     while [[ $# -gt 0 ]]; do
         case $1 in
-            --ipa)
+            --ipa|-ipa)
                 if [[ $# -gt 1 && "$2" != --* && "$2" =~ ^https?:// ]]; then IPA_SOURCE="$2"; shift 2
                 else IPA_SOURCE=""; shift; fi
                 ;;
@@ -327,7 +328,7 @@ findPrebuiltDeb() {
 
 processTweak() {
     local spec="$1"
-    IFS='|' read -r name debName repo extraFlags makeExtra <<< "$spec"
+    IFS='|' read -r name debName repo extraFlags makeExtra commit subDir <<< "$spec"
 
     local prebuilt
     if prebuilt=$(findPrebuiltDeb "$name" "$debName"); then
@@ -344,9 +345,25 @@ processTweak() {
 
     info "No pre-built .deb found for $name, building from source..."
     if [[ ! -d "$name" ]]; then
-        info "Cloning $name..."
-        if [[ -n "$extraFlags" ]]; then git clone --quiet --depth=1 $extraFlags "$repo" "$name"
-        else git clone --quiet --depth=1 "$repo" "$name"; fi
+        if [[ -n "$commit" ]]; then
+            info "Cloning $name (pinning to commit $commit)..."
+            local repoDir="${name}_repo"
+            git clone --quiet "$repo" "$repoDir"
+            (
+                cd "$repoDir"
+                git checkout --quiet "$commit"
+            )
+            if [[ -n "$subDir" ]]; then
+                mv "$repoDir/$subDir" "$name"
+                rm -rf "$repoDir"
+            else
+                mv "$repoDir" "$name"
+            fi
+        else
+            info "Cloning $name..."
+            if [[ -n "$extraFlags" ]]; then git clone --quiet --depth=1 $extraFlags "$repo" "$name"
+            else git clone --quiet --depth=1 "$repo" "$name"; fi
+        fi
     fi
 
     info "Building $name..."

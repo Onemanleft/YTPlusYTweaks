@@ -94,6 +94,12 @@ on:
         required: true
         default: true
 
+      enable_youfixplaybackissues:
+        description: "Build YouFixPlaybackIssues"
+        type: boolean
+        required: true
+        default: true
+
       tweak_version:
         description: "The version of YTLite to use. E.g. 5.2b3 (optional - leave empty to use latest release)"
         default: "5.2.1"
@@ -154,7 +160,8 @@ jobs:
              [ "${{ inputs.enable_youmute }}" = "true" ] || \
              [ "${{ inputs.enable_youloop }}" = "true" ] || \
              [ "${{ inputs.enable_youspeed }}" = "true" ] || \
-             [ "${{ inputs.enable_yougetcaption }}" = "true" ]; then
+             [ "${{ inputs.enable_yougetcaption }}" = "true" ] || \
+             [ "${{ inputs.enable_youfixplaybackissues }}" = "true" ]; then
             echo "enabled=true" >> $GITHUB_OUTPUT
             echo "Tweaks are enabled"
           else
@@ -181,6 +188,7 @@ jobs:
           enable_youloop: ${{ steps.check_tweaks.outputs.enabled == 'true' && inputs.enable_youloop || 'false' }}
           enable_youspeed: ${{ steps.check_tweaks.outputs.enabled == 'true' && inputs.enable_youspeed || 'false' }}
           enable_yougetcaption: ${{ steps.check_tweaks.outputs.enabled == 'true' && inputs.enable_yougetcaption || 'false' }}
+          enable_youfixplaybackissues: ${{ steps.check_tweaks.outputs.enabled == 'true' && inputs.enable_youfixplaybackissues || 'false' }}
 
       - name: Cache Theos
         if: steps.check_tweaks.outputs.enabled == 'true'
@@ -249,6 +257,7 @@ jobs:
           enable_youloop: ${{ inputs.enable_youloop }}
           enable_youspeed: ${{ inputs.enable_youspeed }}
           enable_yougetcaption: ${{ inputs.enable_yougetcaption }}
+          enable_youfixplaybackissues: ${{ inputs.enable_youfixplaybackissues }}
           sdk_version: ${{ inputs.sdk_version }}
           youpip_commit: ${{ steps.commit_hashes.outputs.youpip }}
           ytuhd_commit: ${{ steps.commit_hashes.outputs.ytuhd }}
@@ -267,6 +276,7 @@ jobs:
           youloop_commit: ${{ steps.commit_hashes.outputs.youloop }}
           youspeed_commit: ${{ steps.commit_hashes.outputs.youspeed }}
           yougetcaption_commit: ${{ steps.commit_hashes.outputs.yougetcaption }}
+          youfixplaybackissues_commit: ${{ steps.commit_hashes.outputs.youfixplaybackissues }}
 
       - name: Clone tweaks
         if: steps.check_tweaks.outputs.enabled == 'true'
@@ -287,6 +297,7 @@ jobs:
           enable_youloop: ${{ inputs.enable_youloop }}
           enable_youspeed: ${{ inputs.enable_youspeed }}
           enable_yougetcaption: ${{ inputs.enable_yougetcaption }}
+          enable_youfixplaybackissues: ${{ inputs.enable_youfixplaybackissues }}
           cache_youpip_hit: ${{ steps.cache_tweaks_step.outputs.cache_youpip_hit }}
           cache_ytuhd_hit: ${{ steps.cache_tweaks_step.outputs.cache_ytuhd_hit }}
           cache_ryd_hit: ${{ steps.cache_tweaks_step.outputs.cache_ryd_hit }}
@@ -303,6 +314,7 @@ jobs:
           cache_youloop_hit: ${{ steps.cache_tweaks_step.outputs.cache_youloop_hit }}
           cache_youspeed_hit: ${{ steps.cache_tweaks_step.outputs.cache_youspeed_hit }}
           cache_yougetcaption_hit: ${{ steps.cache_tweaks_step.outputs.cache_yougetcaption_hit }}
+          cache_yfpi_hit: ${{ steps.cache_tweaks_step.outputs.cache_yfpi_hit }}
           workspace: ${{ github.workspace }}
 
       - name: Build tweaks
@@ -324,6 +336,7 @@ jobs:
           enable_youloop: ${{ inputs.enable_youloop }}
           enable_youspeed: ${{ inputs.enable_youspeed }}
           enable_yougetcaption: ${{ inputs.enable_yougetcaption }}
+          enable_youfixplaybackissues: ${{ inputs.enable_youfixplaybackissues }}
           cache_youpip_hit: ${{ steps.cache_tweaks_step.outputs.cache_youpip_hit }}
           cache_ytuhd_hit: ${{ steps.cache_tweaks_step.outputs.cache_ytuhd_hit }}
           cache_ryd_hit: ${{ steps.cache_tweaks_step.outputs.cache_ryd_hit }}
@@ -340,6 +353,7 @@ jobs:
           cache_youloop_hit: ${{ steps.cache_tweaks_step.outputs.cache_youloop_hit }}
           cache_youspeed_hit: ${{ steps.cache_tweaks_step.outputs.cache_youspeed_hit }}
           cache_yougetcaption_hit: ${{ steps.cache_tweaks_step.outputs.cache_yougetcaption_hit }}
+          cache_yfpi_hit: ${{ steps.cache_tweaks_step.outputs.cache_yfpi_hit }}
           theos_path: ${{ github.workspace }}/theos
           workspace: ${{ github.workspace }}
 
@@ -390,6 +404,7 @@ jobs:
           [ -f "youloop.deb" ] && mv "youloop.deb" "YouLoop.deb"
           [ -f "youspeed.deb" ] && mv "youspeed.deb" "YouSpeed.deb"
           [ -f "yougetcaption.deb" ] && mv "yougetcaption.deb" "YouGetCaption.deb"
+          [ -f "youfixplaybackissues.deb" ] && mv "youfixplaybackissues.deb" "YouFixPlaybackIssues.deb"
           echo "Renamed DEB files to their full names"
 
       - name: Zip DEBs

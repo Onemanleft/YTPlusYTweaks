@@ -342,6 +342,12 @@ Fill out an [issue form](https://github.com/fosterbarnes/YTPlusYTweaks/issues) w
   <p>Source code and additional information are available <a href="https://github.com/PoomSmart/YouGetCaption">in PoomSmart's GitHub repository</a>.</p>
 </details>
 
+<details>
+  <summary>YouFixPlaybackIssues</summary>
+  <p>Fixes the notorious playback issue by presenting to YouTube servers as an Oculus Quest, bypassing the iOS sideload check. Developed by <a href="https://github.com/AppropriateNet2928">AppropriateNet2928</a> with the help of <a href="https://github.com/Tonwalter888">Tonwalter888</a>
+  <p>Source code and additional information are available <a href="https://github.com/AppropriateNet2928/YTLitePlusRenewed/tree/main/YouFixPlaybackIssues">in AppropriateNet2928's GitHub repository</a>.</p>
+</details>
+
 ## Credits
 Thank you to everyone that made this project possible! This project would not exist without the existing tools made by these developers. I really appreciate your work :)
 
@@ -357,9 +363,11 @@ Thank you to everyone that made this project possible! This project would not ex
 
 [theos](https://github.com/theos) - theos, SDKs
 
-[Tonwalter888](https://github.com/Tonwalter888/) - YTUHD, SDKs
+[Tonwalter888](https://github.com/Tonwalter888/) - YTUHD, SDKs, YouFixPlaybackIssues
 
 [bhackel](https://github.com/bhackel/) - YouLoop
+
+[AppropriateNet2928](https://github.com/AppropriateNet2928/YTLitePlusRenewed/tree/main/YouFixPlaybackIssues) - YouFixPlaybackIssues
 
 ## Join the Telegram channel for more info
 

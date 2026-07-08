@@ -31,6 +31,8 @@ inputs:
     required: true
   enable_yougetcaption:
     required: true
+  enable_youfixplaybackissues:
+    required: true
 
 outputs:
   youpip:
@@ -84,6 +86,9 @@ outputs:
   yougetcaption:
     description: "YouGetCaption commit hash"
     value: ${{ steps.get_commits.outputs.yougetcaption }}
+  youfixplaybackissues:
+    description: "YouFixPlaybackIssues commit hash"
+    value: ${{ steps.get_commits.outputs.youfixplaybackissues }}
   cyan:
     description: "Cyan commit hash"
     value: ${{ steps.get_commits.outputs.cyan }}
@@ -113,6 +118,7 @@ runs:
         ENABLE_YOULOOP: ${{ inputs.enable_youloop }}
         ENABLE_YOUSPEED: ${{ inputs.enable_youspeed }}
         ENABLE_YOUGETCAPTION: ${{ inputs.enable_yougetcaption }}
+        ENABLE_YOUFIXPLAYBACKISSUES: ${{ inputs.enable_youfixplaybackissues }}
       run: |
         cd ${{ github.workspace }}
         
@@ -169,4 +175,10 @@ runs:
           YTVO_COMMIT=$(get_commit_hash "https://github.com/PoomSmart/YTVideoOverlay.git")
           echo "ytvo=$YTVO_COMMIT" >> $GITHUB_OUTPUT
           echo "YTVideoOverlay commit: $YTVO_COMMIT"
+        fi
+        
+        # Handle YouFixPlaybackIssues (pins to a specific commit)
+        if [ "$ENABLE_YOUFIXPLAYBACKISSUES" = "true" ]; then
+          echo "youfixplaybackissues=adec498" >> $GITHUB_OUTPUT
+          echo "YouFixPlaybackIssues commit: adec498"
         fi

@@ -31,6 +31,8 @@ inputs:
     required: true
   enable_yougetcaption:
     required: true
+  enable_youfixplaybackissues:
+    required: true
   cache_youpip_hit:
     required: true
   cache_ytuhd_hit:
@@ -62,6 +64,8 @@ inputs:
   cache_youspeed_hit:
     required: true
   cache_yougetcaption_hit:
+    required: true
+  cache_yfpi_hit:
     required: true
   theos_path:
     required: true
@@ -108,6 +112,8 @@ runs:
         CACHE_YOULOOP_HIT: ${{ inputs.cache_youloop_hit }}
         CACHE_YOUSPEED_HIT: ${{ inputs.cache_youspeed_hit }}
         CACHE_YOUGETCAPTION_HIT: ${{ inputs.cache_yougetcaption_hit }}
+        ENABLE_YOUFIXPLAYBACKISSUES: ${{ inputs.enable_youfixplaybackissues }}
+        CACHE_YFPI_HIT: ${{ inputs.cache_yfpi_hit }}
       run: |
         cd ${{ inputs.workspace }}
         
@@ -127,6 +133,7 @@ runs:
           "ENABLE_YOULOOP|CACHE_YOULOOP_HIT|YouLoop|youloop.deb|YouLoop|"
           "ENABLE_YOUSPEED|CACHE_YOUSPEED_HIT|YouSpeed|youspeed.deb|YouSpeed|"
           "ENABLE_YOUGETCAPTION|CACHE_YOUGETCAPTION_HIT|YouGetCaption|yougetcaption.deb|YouGetCaption|"
+          "ENABLE_YOUFIXPLAYBACKISSUES|CACHE_YFPI_HIT|YouFixPlaybackIssues|youfixplaybackissues.deb|YouFixPlaybackIssues|"
         )
         
         for tweak in "${tweaks[@]}"; do
